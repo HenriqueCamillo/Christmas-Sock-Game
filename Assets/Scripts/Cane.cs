@@ -73,6 +73,7 @@ public class Cane : MonoBehaviour
         {
             CancelInvoke();
             
+            sock.airControlActive = false;
             wreath = other.GetComponent<HingeJoint2D>();
             Vector2 direction = wreath.transform.position - sock.transform.position;
 

@@ -202,6 +202,7 @@ MonoBehaviour:
   lowJumpMultiplier: 2
   flying: 0
   overturned: 0
+  airControlActive: 0
   liftUpSpeed: 10
 --- !u!50 &4757320068575333072
 Rigidbody2D:
@@ -464,7 +465,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0.008696973, y: -0.030628443}
   serializedVersion: 2
-  m_Radius: 0.13261533
+  m_Radius: 0.17594768
 --- !u!50 &4757320068916152562
 Rigidbody2D:
   serializedVersion: 4

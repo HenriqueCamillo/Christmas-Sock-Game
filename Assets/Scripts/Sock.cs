@@ -18,6 +18,7 @@ public class Sock : MonoBehaviour
     public float lowJumpMultiplier = 2f;
     public bool flying;
     public bool overturned;
+    public bool airControlActive;
 
 
     void Start()
@@ -50,7 +51,7 @@ public class Sock : MonoBehaviour
     {
         if (cane.connected)
             rb.AddForce(this.transform.right * movement * swingForce);
-        else if (!flying && !overturned)
+        else if (!flying && !overturned || airControlActive)
             rb.velocity = new Vector2(movement * speed, rb.velocity.y);
 
         // if(rb.velocity.y < 0)
@@ -71,6 +72,12 @@ public class Sock : MonoBehaviour
             liftUpValue = Vector2.SignedAngle(Vector2.up, this.transform.up) > 0 ? liftUpSpeed : -liftUpSpeed;
             InvokeRepeating(nameof(LiftUp), 0f, Time.fixedDeltaTime);
         }
+    }
+
+    public void GiftImpulse()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, 0f);
+        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
 
 
