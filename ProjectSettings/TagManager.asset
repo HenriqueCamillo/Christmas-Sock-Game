@@ -13,9 +13,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Ground
+  - Cane
+  - Wreath
   - 
   - 
   - 
@@ -40,4 +40,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Wreaths
+    uniqueID: 3823130197
+    locked: 0
+  - name: Cane
+    uniqueID: 1991583621
+    locked: 0
+  - name: Sock
+    uniqueID: 417343311
     locked: 0
