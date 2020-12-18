@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4757320068186829503}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.446, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4757320068646160334}
@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4757320068201667347}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.434, y: 0, z: 0}
+  m_LocalPosition: {x: -0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4757320068646160334}
@@ -84,7 +84,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4757320068423902344}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.402, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4757320068646160334}
@@ -193,6 +193,7 @@ MonoBehaviour:
   jumpForce: 5
   swingForce: 5
   groundCheckRadius: 0.2
+  overturnCheckRadius: 0.075
   groundCheck: {fileID: 4757320069383036536}
   overturnedDetectorLeft: {fileID: 4757320068201667346}
   overturnedDetectorRight: {fileID: 4757320068186829502}
@@ -262,7 +263,7 @@ GameObject:
   - component: {fileID: 4757320068646160334}
   - component: {fileID: 4757320068646160335}
   - component: {fileID: 4757320068646160329}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Checkers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -465,7 +466,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0.008696973, y: -0.030628443}
   serializedVersion: 2
-  m_Radius: 0.17594768
+  m_Radius: 0.4
 --- !u!50 &4757320068916152562
 Rigidbody2D:
   serializedVersion: 4
@@ -506,7 +507,8 @@ MonoBehaviour:
   retractSpeed: 0.25
   colliderThreshold: 0.4
   maxLenghtCooldown: 0.35
-  lenght: 2.75
+  lenght: 3
+  virtualCamera: {fileID: 0}
 --- !u!95 &4757320068916152572
 Animator:
   serializedVersion: 3

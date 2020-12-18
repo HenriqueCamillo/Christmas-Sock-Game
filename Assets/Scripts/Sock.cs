@@ -10,6 +10,7 @@ public class Sock : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float swingForce;
     [SerializeField] float groundCheckRadius;
+    [SerializeField] float overturnCheckRadius;
     [SerializeField] Transform groundCheck;
     [SerializeField] Transform overturnedDetectorLeft, overturnedDetectorRight, overturnedDetectorUp;
     [SerializeField] Cane cane;
@@ -32,9 +33,9 @@ public class Sock : MonoBehaviour
         movement = Input.GetAxis("Horizontal");
 
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, LayerMask.GetMask("Ground"));
-        overturned = Physics2D.OverlapCircle(overturnedDetectorLeft.position, groundCheckRadius, LayerMask.GetMask("Ground"))
-                  || Physics2D.OverlapCircle(overturnedDetectorRight.position, groundCheckRadius, LayerMask.GetMask("Ground"))
-                  || Physics2D.OverlapCircle(overturnedDetectorUp.position, groundCheckRadius, LayerMask.GetMask("Ground"));
+    overturned = Physics2D.OverlapCircle(overturnedDetectorLeft.position, overturnCheckRadius, LayerMask.GetMask("Ground"))
+                  || Physics2D.OverlapCircle(overturnedDetectorRight.position, overturnCheckRadius, LayerMask.GetMask("Ground"))
+                  || Physics2D.OverlapCircle(overturnedDetectorUp.position, overturnCheckRadius, LayerMask.GetMask("Ground"));
 
         if (grounded)
         {
@@ -74,7 +75,7 @@ public class Sock : MonoBehaviour
         }
     }
 
-    public void GiftImpulse()
+    public void SpringImpulse()
     {
         rb.velocity = new Vector2(rb.velocity.x, 0f);
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
@@ -93,8 +94,9 @@ public class Sock : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-        Gizmos.DrawWireSphere(overturnedDetectorLeft.position, groundCheckRadius);
-        Gizmos.DrawWireSphere(overturnedDetectorRight.position, groundCheckRadius);
-        Gizmos.DrawWireSphere(overturnedDetectorUp.position, groundCheckRadius);
+        Gizmos.DrawWireSphere(overturnedDetectorLeft.position, overturnCheckRadius);
+        Gizmos.DrawWireSphere(overturnedDetectorRight.position, overturnCheckRadius);
+        Gizmos.DrawWireSphere(overturnedDetectorUp.position, overturnCheckRadius
+        );
     }
 }

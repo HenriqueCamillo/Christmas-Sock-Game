@@ -12,6 +12,6 @@ public class Spring : MonoBehaviour
         if (sock == null)
             sock = other.GetComponent<Sock>();
         
-        sock.GiftImpulse();
+        sock.SpringImpulse();
     }
 }
