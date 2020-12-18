@@ -8,6 +8,11 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
+    public void LoadMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
     public void Quit()
     {
         Application.Quit();
