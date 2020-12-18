@@ -5,6 +5,7 @@ using UnityEngine;
 public class Sock : MonoBehaviour
 {
     private Rigidbody2D rb;
+    private Animator anim;
     private float movement;
     [SerializeField] float speed;
     [SerializeField] float jumpForce;
@@ -28,6 +29,7 @@ public class Sock : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -36,10 +38,21 @@ public class Sock : MonoBehaviour
         movement = Input.GetAxisRaw("Horizontal");
 
         grounded = !cane.connected && Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, LayerMask.GetMask("Ground"));
+        anim.SetBool("Grounded", grounded);
+
         overturned = !cane.connected && (
                      Physics2D.OverlapCircle(overturnedDetectorLeft.position, overturnCheckRadius, LayerMask.GetMask("Ground"))
                   || Physics2D.OverlapCircle(overturnedDetectorRight.position, overturnCheckRadius, LayerMask.GetMask("Ground"))
                   || Physics2D.OverlapCircle(overturnedDetectorUp.position, overturnCheckRadius, LayerMask.GetMask("Ground")));
+        anim.SetBool("Overturned", overturned);
+
+        if (!cane.connected && !flying && !overturned)
+        {
+            if (rb.velocity.x < -0.1f)
+                this.transform.localScale = new Vector3(-0.5f, 0.5f, 1f);
+            else if (rb.velocity.x > 0.1f)
+                this.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
+        }
 
         if (grounded)
         {
@@ -54,6 +67,12 @@ public class Sock : MonoBehaviour
                 Jump();
         }
         
+        anim.SetBool("Walking", movement != 0);
+    }
+
+    public void SetHooked()
+    {
+        anim.SetBool("Hooked", cane.connected);
     }
 
     private void FixedUpdate()

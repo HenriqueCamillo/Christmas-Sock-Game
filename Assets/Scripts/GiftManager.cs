@@ -1,18 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using TMPro;
 
 public class GiftManager : MonoBehaviour
 {
     public static GiftManager instance;
-    [SerializeField] int gifts;
+    [SerializeField] TextMeshProUGUI text;
+    private int gifts;
+    private int total;
+
+    public int Total
+    {
+
+        get => total;
+        set 
+        {
+            total = value;
+            text.SetText($"{gifts}/{total}");
+        }
+    }
+
     public int Gifts
     {
         get => gifts;
         set
         {
             gifts = value;
-            // TODO update UI
+            text.SetText($"{gifts}/{total}");
         }
     }
 

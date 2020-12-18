@@ -82,6 +82,7 @@ public class Cane : MonoBehaviour
             wreath.connectedBody = sockRb;
 
             connected = true;
+            sock.SetHooked();
             sock.flying = true;
         }
     }
@@ -124,6 +125,7 @@ public class Cane : MonoBehaviour
     void Disconnect()
     {
         connected = false;
+        sock.SetHooked();
         wreath.connectedBody = null;
         InvokeRepeating(nameof(Retract), 0f, Time.fixedDeltaTime);
     }
