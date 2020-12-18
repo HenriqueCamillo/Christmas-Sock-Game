@@ -9,8 +9,11 @@ public class Sock : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float jumpForce;
     [SerializeField] float swingForce;
+    [SerializeField] float airControlForce;
     [SerializeField] float groundCheckRadius;
     [SerializeField] float overturnCheckRadius;
+    [SerializeField] float liftUpSpeed;
+    private float liftUpValue;
     [SerializeField] Transform groundCheck;
     [SerializeField] Transform overturnedDetectorLeft, overturnedDetectorRight, overturnedDetectorUp;
     [SerializeField] Cane cane;
@@ -30,12 +33,13 @@ public class Sock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movement = Input.GetAxis("Horizontal");
+        movement = Input.GetAxisRaw("Horizontal");
 
-        grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, LayerMask.GetMask("Ground"));
-    overturned = Physics2D.OverlapCircle(overturnedDetectorLeft.position, overturnCheckRadius, LayerMask.GetMask("Ground"))
+        grounded = !cane.connected && Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, LayerMask.GetMask("Ground"));
+        overturned = !cane.connected && (
+                     Physics2D.OverlapCircle(overturnedDetectorLeft.position, overturnCheckRadius, LayerMask.GetMask("Ground"))
                   || Physics2D.OverlapCircle(overturnedDetectorRight.position, overturnCheckRadius, LayerMask.GetMask("Ground"))
-                  || Physics2D.OverlapCircle(overturnedDetectorUp.position, overturnCheckRadius, LayerMask.GetMask("Ground"));
+                  || Physics2D.OverlapCircle(overturnedDetectorUp.position, overturnCheckRadius, LayerMask.GetMask("Ground")));
 
         if (grounded)
         {
@@ -43,8 +47,12 @@ public class Sock : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.W))
                 Jump();
         }
-        else if (Input.GetKeyDown(KeyCode.W) && overturned && Mathf.Abs(rb.velocity.y) < 0.05f)
-            Jump();
+        else if (overturned && Mathf.Abs(rb.velocity.y) < 0.05f)
+        {
+            flying = false;
+            if (Input.GetKeyDown(KeyCode.W))
+                Jump();
+        }
         
     }
 
@@ -53,16 +61,20 @@ public class Sock : MonoBehaviour
         if (cane.connected)
             rb.AddForce(this.transform.right * movement * swingForce);
         else if (!flying && !overturned || airControlActive)
+        {
+
             rb.velocity = new Vector2(movement * speed, rb.velocity.y);
 
-        // if(rb.velocity.y < 0)
-        //     rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
-        // else if(rb.velocity.y > 0 && !Input.GetKey(KeyCode.W))
-        //     rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+            if(rb.velocity.y < 0)
+                rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+            else if(rb.velocity.y > 0 && !Input.GetKey(KeyCode.W))
+                rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+        }
+        else if (flying && movement != 0f)
+        {
+            rb.AddForce(Vector2.right * movement * airControlForce);
+        }
     }
-
-    [SerializeField] float liftUpSpeed;
-    private float liftUpValue;
 
     private void Jump()
     {
@@ -96,7 +108,6 @@ public class Sock : MonoBehaviour
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         Gizmos.DrawWireSphere(overturnedDetectorLeft.position, overturnCheckRadius);
         Gizmos.DrawWireSphere(overturnedDetectorRight.position, overturnCheckRadius);
-        Gizmos.DrawWireSphere(overturnedDetectorUp.position, overturnCheckRadius
-        );
+        Gizmos.DrawWireSphere(overturnedDetectorUp.position, overturnCheckRadius);
     }
 }

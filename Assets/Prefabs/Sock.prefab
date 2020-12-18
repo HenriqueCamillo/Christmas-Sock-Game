@@ -119,7 +119,7 @@ Transform:
   m_GameObject: {fileID: 4757320068575333076}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4757320068646160334}
   - {fileID: 4757320069119970540}
@@ -164,7 +164,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 417343311
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b5b0fc5be52939d4e861da6656e496c1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -192,19 +192,20 @@ MonoBehaviour:
   speed: 5
   jumpForce: 5
   swingForce: 5
+  airControlForce: 1.5
   groundCheckRadius: 0.2
   overturnCheckRadius: 0.075
+  liftUpSpeed: 10
   groundCheck: {fileID: 4757320069383036536}
   overturnedDetectorLeft: {fileID: 4757320068201667346}
   overturnedDetectorRight: {fileID: 4757320068186829502}
   overturnedDetectorUp: {fileID: 4757320068423902347}
   cane: {fileID: 4757320068916152573}
-  fallMultiplier: 2.5
-  lowJumpMultiplier: 2
+  fallMultiplier: 2
+  lowJumpMultiplier: 1.7
   flying: 0
   overturned: 0
   airControlActive: 0
-  liftUpSpeed: 10
 --- !u!50 &4757320068575333072
 Rigidbody2D:
   serializedVersion: 4
@@ -222,7 +223,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -438,7 +439,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1991583621
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 247f8544f836f0742919fda1c2beac67, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -508,7 +509,6 @@ MonoBehaviour:
   colliderThreshold: 0.4
   maxLenghtCooldown: 0.35
   lenght: 3
-  virtualCamera: {fileID: 0}
 --- !u!95 &4757320068916152572
 Animator:
   serializedVersion: 3
