@@ -133,7 +133,6 @@ public class Cane : MonoBehaviour
 
     void Disconnect()
     {
-        print(sockRb.velocity.magnitude);
         connected = false;
         sock.SetHooked();
         wreath.connectedBody = null;

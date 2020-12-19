@@ -130,6 +130,9 @@ public class Sock : MonoBehaviour
 
     private void LiftUp()
     {
+        if (grounded)
+            CancelInvoke(nameof(LiftUp));
+
         this.transform.Rotate(0f, 0f, liftUpValue);
 
         if (Vector2.Angle(Vector2.up, this.transform.up) < 1f)
