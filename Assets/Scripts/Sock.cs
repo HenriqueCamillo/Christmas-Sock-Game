@@ -35,7 +35,11 @@ public class Sock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PauseMenu.instance.Paused)
+            return;
+            
         movement = Input.GetAxisRaw("Horizontal");
+
 
         grounded = !cane.connected && Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, LayerMask.GetMask("Ground"));
         anim.SetBool("Grounded", grounded);

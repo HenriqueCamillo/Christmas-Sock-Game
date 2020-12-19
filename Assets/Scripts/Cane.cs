@@ -54,6 +54,9 @@ public class Cane : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PauseMenu.instance.Paused)
+            return;
+            
         if (Input.GetMouseButtonDown(0))
         {
             if (connected)
