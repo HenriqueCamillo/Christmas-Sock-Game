@@ -18,6 +18,9 @@ public class Cane : MonoBehaviour
     private float retractLerpValue;
     [SerializeField] float maxLenghtCooldown;
     [SerializeField] float lenght;
+    private AudioSource audioSource;
+    [SerializeField] AudioClip slideClip, connectedClip, flyingClip;
+    [SerializeField] float minFlyingSpeed;
 
     private float Blend
     {
@@ -45,6 +48,7 @@ public class Cane : MonoBehaviour
         sockRb = sock.GetComponent<Rigidbody2D>(); 
         anim = GetComponent<Animator>();
         col = GetComponent<Collider2D>();
+        audioSource = GetComponent<AudioSource>();
 
         col.enabled = false;
         throwLerpValue = Mathf.Lerp(0f, 1f, throwSpeed);
@@ -56,14 +60,15 @@ public class Cane : MonoBehaviour
     {
         if (PauseMenu.instance.Paused)
             return;
-            
+
         if (Input.GetMouseButtonDown(0))
         {
             if (connected)
                 Disconnect();
-            else
+            else if (blend < colliderThreshold)
             {
                 CancelInvoke();
+                audioSource.PlayOneShot(slideClip);
                 InvokeRepeating(nameof(Throw), 0f, Time.fixedDeltaTime);
             }
 
@@ -85,6 +90,7 @@ public class Cane : MonoBehaviour
             wreath.connectedBody = sockRb;
 
             connected = true;
+            audioSource.PlayOneShot(connectedClip);
             sock.SetHooked();
             sock.flying = true;
         }
@@ -127,9 +133,13 @@ public class Cane : MonoBehaviour
 
     void Disconnect()
     {
+        print(sockRb.velocity.magnitude);
         connected = false;
         sock.SetHooked();
         wreath.connectedBody = null;
         InvokeRepeating(nameof(Retract), 0f, Time.fixedDeltaTime);
+
+        if (sockRb.velocity.magnitude > minFlyingSpeed)
+            sock.PlayFlyingSound();
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Sock : MonoBehaviour
 {
+    private TrailRenderer trail;
     private Rigidbody2D rb;
     private Animator anim;
     private float movement;
@@ -24,12 +25,17 @@ public class Sock : MonoBehaviour
     public bool flying;
     public bool overturned;
     public bool airControlActive;
+    private AudioSource audioSource;
+    [SerializeField] AudioClip flyingClip;
+    [SerializeField] float trailSpeed;
 
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        trail = GetComponent<TrailRenderer>();
     }
 
     // Update is called once per frame
@@ -37,7 +43,7 @@ public class Sock : MonoBehaviour
     {
         if (PauseMenu.instance.Paused)
             return;
-            
+
         movement = Input.GetAxisRaw("Horizontal");
 
 
@@ -72,6 +78,9 @@ public class Sock : MonoBehaviour
         }
         
         anim.SetBool("Walking", movement != 0);
+
+        trail.emitting =  rb.velocity.magnitude > trailSpeed && (cane.connected || flying);
+
     }
 
     public void SetHooked()
@@ -132,5 +141,10 @@ public class Sock : MonoBehaviour
         Gizmos.DrawWireSphere(overturnedDetectorLeft.position, overturnCheckRadius);
         Gizmos.DrawWireSphere(overturnedDetectorRight.position, overturnCheckRadius);
         Gizmos.DrawWireSphere(overturnedDetectorUp.position, overturnCheckRadius);
+    }
+
+    public void PlayFlyingSound()
+    {
+        audioSource.PlayOneShot(flyingClip);
     }
 }
