@@ -36,6 +36,8 @@ public class Sock : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         trail = GetComponent<TrailRenderer>();
+
+        CheckpointManager.instance.checkpointLocation = this.transform.position;
     }
 
     // Update is called once per frame
@@ -146,5 +148,11 @@ public class Sock : MonoBehaviour
     public void PlayFlyingSound()
     {
         audioSource.PlayOneShot(flyingClip);
+    }
+
+    public void Reset(Vector3 pos) 
+    {
+        this.transform.position = pos;
+        rb.velocity = Vector2.zero;
     }
 }
