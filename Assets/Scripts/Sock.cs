@@ -155,7 +155,10 @@ public class Sock : MonoBehaviour
 
     public void Reset(Vector3 pos) 
     {
+        CancelInvoke();
+        this.transform.rotation = Quaternion.identity;
         this.transform.position = pos;
+        rb.angularVelocity = 0f;
         rb.velocity = Vector2.zero;
     }
 }
