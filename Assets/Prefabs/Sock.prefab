@@ -210,6 +210,7 @@ MonoBehaviour:
   overturned: 0
   airControlActive: 0
   flyingClip: {fileID: 8300000, guid: d29dd5da0cc84ae46abab4d19462e076, type: 3}
+  jumpClip: {fileID: 8300000, guid: daeea6dc1bbcd6a4684961d0d1687aac, type: 3}
   trailSpeed: 2
 --- !u!50 &4757320068575333072
 Rigidbody2D:

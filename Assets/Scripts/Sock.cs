@@ -26,7 +26,7 @@ public class Sock : MonoBehaviour
     public bool overturned;
     public bool airControlActive;
     private AudioSource audioSource;
-    [SerializeField] AudioClip flyingClip;
+    [SerializeField] AudioClip flyingClip, jumpClip;
     [SerializeField] float trailSpeed;
 
 
@@ -51,7 +51,7 @@ public class Sock : MonoBehaviour
         grounded = !cane.connected && Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, LayerMask.GetMask("Ground"));
         anim.SetBool("Grounded", grounded);
 
-        overturned = !cane.connected && (
+        overturned = !cane.connected && !grounded && (
                      Physics2D.OverlapCircle(overturnedDetectorLeft.position, overturnCheckRadius, LayerMask.GetMask("Ground"))
                   || Physics2D.OverlapCircle(overturnedDetectorRight.position, overturnCheckRadius, LayerMask.GetMask("Ground"))
                   || Physics2D.OverlapCircle(overturnedDetectorUp.position, overturnCheckRadius, LayerMask.GetMask("Ground")));
@@ -111,6 +111,7 @@ public class Sock : MonoBehaviour
 
     private void Jump()
     {
+        audioSource.PlayOneShot(jumpClip);
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         if (overturned)
         {
