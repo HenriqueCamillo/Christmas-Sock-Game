@@ -48,7 +48,6 @@ public class Sock : MonoBehaviour
 
         movement = Input.GetAxisRaw("Horizontal");
 
-
         grounded = !cane.connected && Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, LayerMask.GetMask("Ground"));
         anim.SetBool("Grounded", grounded);
 
